@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('tipo'); // 'morador' ou 'prefeitura'
+            $table->string('nome');
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->json('endereco'); // Rua, bairro e cidade
             $table->rememberToken();
             $table->timestamps();
         });
