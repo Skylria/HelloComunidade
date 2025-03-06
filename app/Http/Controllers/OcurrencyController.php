@@ -18,7 +18,7 @@ class OcurrencyController extends Controller
             $ocorrencias = Ocorrencia::whereJsonContains('endereco->cidade', $user->endereco['cidade'])->get();
         }
 
-        return view('ocorrencias.index', compact('ocorrencias'));
+        return view('index', compact('ocorrencias'));
     }
 
     public function create()
@@ -45,6 +45,6 @@ class OcurrencyController extends Controller
             'user_id' => $user->id,
         ]);
 
-        return redirect()->route('ocorrencias.index')->with('success', 'Ocorrência criada com sucesso!');
+        return redirect()->route('ocorrencias.create')->with('success', 'Ocorrência criada com sucesso!');
     }
 }

@@ -19,7 +19,6 @@ class UserController extends Controller
     public function register(Request $request)
     {
         $validated = $request->validate([
-            'tipo' => 'required|in:morador,prefeitura',
             'nome' => 'required|string|max:255',
             'email' => 'required|string|email|unique:users,email',
             'password' => 'required|string|min:6|confirmed',
@@ -29,14 +28,11 @@ class UserController extends Controller
         ]);
 
         $endereco = ['cidade' => $validated['cidade']];
-
-        if ($validated['tipo'] === 'morador') {
-            $endereco['rua'] = $validated['rua'];
-            $endereco['bairro'] = $validated['bairro'];
-        }
+        $endereco['rua'] = $validated['rua'];
+        $endereco['bairro'] = $validated['bairro'];
 
         User::create([
-            'tipo' => $validated['tipo'],
+            'tipo' => 'morador',
             'nome' => $validated['nome'],
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
@@ -48,7 +44,7 @@ class UserController extends Controller
         Auth::attempt($credentials);
         $request->session()->regenerate();
 
-        return redirect()->route('ocorrencias.index')->withSuccess('Cadastro realizado com sucesso!');
+        return redirect()->route('home');
     }
 
     // Exibe a página de login
@@ -66,7 +62,7 @@ class UserController extends Controller
         ]);
 
         if (Auth::attempt($credentials)) {
-            return redirect()->route('ocorrencias.index');
+            return redirect()->route('home');
         }
 
         return back()->withErrors(['email' => 'Credenciais inválidas']);
