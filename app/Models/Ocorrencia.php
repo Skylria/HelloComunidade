@@ -10,15 +10,16 @@ class Ocorrencia extends Model
     use HasFactory;
 
     protected $fillable = [
+        'tipo',
         'titulo',
         'descricao',
         'midia',
         'status',
-        'endereco',
+        'rua',
+        'bairro',
+        'cidade',
         'user_id'
     ];
-
-    protected $casts = ['endereco' => 'array'];
 
     public function user()
     {

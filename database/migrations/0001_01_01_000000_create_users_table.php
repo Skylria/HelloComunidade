@@ -17,7 +17,9 @@ return new class extends Migration
             $table->string('nome');
             $table->string('email')->unique();
             $table->string('password');
-            $table->json('endereco'); // Rua, bairro e cidade
+            $table->string('rua');
+            $table->string('bairro');
+            $table->string('cidade');
             $table->rememberToken();
             $table->timestamps();
         });
