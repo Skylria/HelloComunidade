@@ -12,7 +12,7 @@
             <div>
                 <label for="ocorrencias" class="block mb-2 text-sm font-bold text-gray-900 dark:text-white">Selecione
                     um problema</label>
-                <select id="ocorrencias"
+                <select id="tipo" name="tipo"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                     <option selected>Selecione...</option>
                     <option value="vazamento">Vazamento</option>
@@ -24,22 +24,21 @@
                 </select>
             </div>
             <div>
-                <label for="endereco"
-                    class="block mb-2 text-sm font-bold text-gray-900 dark:text-gray-300">Endereco</label>
-                <input type="text" id="nome"
+                <label for="rua" class="block mb-2 text-sm font-bold text-gray-900 dark:text-gray-300">Endereco</label>
+                <input type="text" id="nome" name="rua"
                     class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
-                    placeholder="Rua tal, 00 - bairro tal" required>
+                    placeholder="Rua tal" required>
             </div>
             <div>
                 <label for="título" class="block mb-2 text-sm font-bold text-gray-900 dark:text-gray-300">Título</label>
-                <input type="text" id="title"
+                <input type="text" id="title" name="titulo"
                     class="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
                     placeholder="Ex: Buraco na rua" required>
             </div>
             <div class="sm:col-span-2">
                 <label for="descrição"
                     class="block mb-2 text-sm font-bold text-gray-900 dark:text-gray-400">Descrição</label>
-                <textarea id="message" rows="6"
+                <textarea id="message" name="descricao" rows="6"
                     class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Descreva seu problema..."></textarea>
             </div>
@@ -60,6 +59,15 @@
                     <input id="dropzone-file" type="file" class="hidden" />
                 </label>
             </div>
+            @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
             <button type="submit"
                 class="py-3 px-5 text-sm font-bold text-center text-white rounded-lg bg-blue-700 sm:w-fit hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Criar
                 Ocorrência</button>

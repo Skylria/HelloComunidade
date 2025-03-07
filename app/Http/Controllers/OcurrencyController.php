@@ -13,9 +13,11 @@ class OcurrencyController extends Controller
         $user = Auth::user();
 
         if ($user->tipo === 'morador') {
-            $ocorrencias = Ocorrencia::whereJsonContains('endereco->bairro', $user->endereco['bairro'])->get();
+            // $ocorrencias = Ocorrencia::whereJsonContains('endereco->bairro', $user->endereco['bairro'])->get();
+            $ocorrencias = Ocorrencia::where('bairro', $user->bairro)->get();
         } else {
-            $ocorrencias = Ocorrencia::whereJsonContains('endereco->cidade', $user->endereco['cidade'])->get();
+            $ocorrencias = Ocorrencia::where('cidade', $user->cidade)->get();
+            // $ocorrencias = Ocorrencia::whereJsonContains('endereco->cidade', $user->endereco['cidade'])->get();
         }
 
         return view('index', compact('ocorrencias'));
@@ -29,22 +31,27 @@ class OcurrencyController extends Controller
     public function store(Request $request)
     {
         $user = Auth::user();
-
+        
         $validated = $request->validate([
+            'tipo' => 'required|string',
+            'rua' => 'required|string|max:255',
             'titulo' => 'required|string|max:255',
             'descricao' => 'required|string',
             'midia' => 'nullable|string',
         ]);
-
+        
         Ocorrencia::create([
+            'tipo' => $validated['tipo'],
             'titulo' => $validated['titulo'],
             'descricao' => $validated['descricao'],
             'midia' => $validated['midia'] ?? null,
             'status' => 'pendente',
-            'endereco' => $user->endereco,
+            'rua' => $validated['rua'],
+            'bairro' => $user->bairro,
+            'cidade' => $user->cidade,
             'user_id' => $user->id,
         ]);
 
-        return redirect()->route('ocorrencias.create')->with('success', 'Ocorrência criada com sucesso!');
+        return redirect()->route('home')->with('success', 'Ocorrência criada com sucesso!');
     }
 }

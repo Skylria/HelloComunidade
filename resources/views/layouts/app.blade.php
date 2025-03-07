@@ -10,6 +10,7 @@
 </head>
 
 <body>
+    @if(Auth::check())
     <nav class="bg-blue-700 border-gray-200 ">
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
             <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
@@ -19,9 +20,7 @@
                 Hello Comunidade
             </div>
             <div class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-                @if(Auth::check())
                 <a href="{{ route('logout') }}" class="block px-4 py-2 text-white font-bold hover:opacity-50">Sair</a>
-                @endif
             </div>
             <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-user">
                 <ul
@@ -43,6 +42,7 @@
             </div>
         </div>
     </nav>
+    @endif
     @yield('content')
     <ul
         class="flex font-medium p-3 rounded-full justify-around flex-row bg-gray-300 md:hidden mx-5 fixed bottom-4 left-0 right-0">

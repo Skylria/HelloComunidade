@@ -22,21 +22,19 @@ class UserController extends Controller
             'nome' => 'required|string|max:255',
             'email' => 'required|string|email|unique:users,email',
             'password' => 'required|string|min:6|confirmed',
-            'rua' => 'nullable|required_if:tipo,morador|string|max:255',
-            'bairro' => 'nullable|required_if:tipo,morador|string|max:255',
+            'rua' => 'required|string|max:255',
+            'bairro' => 'required|string|max:255',
             'cidade' => 'required|string|max:255',
         ]);
-
-        $endereco = ['cidade' => $validated['cidade']];
-        $endereco['rua'] = $validated['rua'];
-        $endereco['bairro'] = $validated['bairro'];
 
         User::create([
             'tipo' => 'morador',
             'nome' => $validated['nome'],
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
-            'endereco' => $endereco
+            'rua' => $validated['rua'],
+            'bairro' => $validated['bairro'],
+            'cidade' => $validated['cidade'],
         ]);
 
         
