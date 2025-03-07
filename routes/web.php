@@ -9,6 +9,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/ocorrencias/criar', [OcurrencyController::class, 'create'])->name('ocorrencias.create');
     Route::get('/ocorrencias/$user_id', [OcurrencyController::class,'list'])->name('ocorrencias.list');
     Route::post('/ocorrencias', [OcurrencyController::class, 'store'])->name('ocorrencias.store');
+    Route::get('/ocorrencias/show', [OcurrencyController::class,'show'])->name('ocorrencias.show');
 });
 
 // Registro e login de usuários
