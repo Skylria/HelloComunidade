@@ -54,4 +54,13 @@ class OcurrencyController extends Controller
 
         return redirect()->route('home')->with('success', 'Ocorrência criada com sucesso!');
     }
+    
+    // public function show($id){
+    //     $ocorrencias = Ocorrencia::where('user_id', $id)->get();
+    // }
+
+    // public function edit($id){
+    //     $ocorrencia = Ocorrencia::where('id', $id)->get();
+
+    // }
 }

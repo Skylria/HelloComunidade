@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 Route::middleware('auth')->group(function () {
     Route::get('/home', [OcurrencyController::class, 'index'])->name('home');
     Route::get('/ocorrencias/criar', [OcurrencyController::class, 'create'])->name('ocorrencias.create');
+    Route::get('/ocorrencias/$user_id', [OcurrencyController::class,'list'])->name('ocorrencias.list');
     Route::post('/ocorrencias', [OcurrencyController::class, 'store'])->name('ocorrencias.store');
 });
 
