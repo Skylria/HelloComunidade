@@ -22,17 +22,17 @@ class OcorrenciaController extends Controller
             $ocorrencias = DB::table('ocorrencias')
                 ->join('users', 'users.id', '=', 'ocorrencias.user_id')
                 ->where('ocorrencias.bairro', '=', $user->bairro)
-                ->where( 'ocorrencias.status', '=', $statusFilter)
+                ->where('ocorrencias.status', '=', $statusFilter)
                 ->select('ocorrencias.*', 'users.nome')
                 ->get();
         } else {
             $ocorrencias = DB::table('ocorrencias')
-            ->join('users', 'users.id', '=', 'ocorrencias.user_id')
-            ->where('ocorrencias.cidade', '=', $user->cidade)
-            ->select('ocorrencias.*', 'users.nome')
-            ->get();
+                ->join('users', 'users.id', '=', 'ocorrencias.user_id')
+                ->where('ocorrencias.cidade', '=', $user->cidade)
+                ->select('ocorrencias.*', 'users.nome')
+                ->get();
         }
-        
+
         return view('ocorrencias.index', [
             'ocorrencias' => $ocorrencias,
             'status' => $status
@@ -53,20 +53,29 @@ class OcorrenciaController extends Controller
     public function store(Request $request)
     {
         $user = Auth::user();
-        
+
+        $midia = $request->file('midia');
+        $midiaBase64 = null;
+
+        if ($midia != null) {
+            $path = $midia->getRealPath();
+            $image = file_get_contents($path);
+            $midiaBase64 = base64_encode($image);
+        }
+
         $validated = $request->validate([
             'tipo' => 'required|string',
             'rua' => 'required|string|max:255',
             'titulo' => 'required|string|max:255',
             'descricao' => 'required|string',
-            'midia' => 'nullable|string',
+            'midia' => 'nullable|file',
         ]);
-        
+
         Ocorrencia::create([
             'tipo' => $validated['tipo'],
             'titulo' => $validated['titulo'],
             'descricao' => $validated['descricao'],
-            'midia' => $validated['midia'] ?? null,
+            'midia' => $midiaBase64,
             'status' => 'pendente',
             'rua' => $validated['rua'],
             'bairro' => $user->bairro,
@@ -74,7 +83,7 @@ class OcorrenciaController extends Controller
             'user_id' => $user->id,
         ]);
 
-        return redirect()->route('ocorrencias.index');
+        return redirect()->route('ocorrencias', 'pendentes');
     }
 
     /**
@@ -97,7 +106,7 @@ class OcorrenciaController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, Ocorrencia $ocorrencia)
-    {   
+    {
         $validated = $request->validate([
             'tipo' => 'required|string',
             'rua' => 'required|string|max:255',
@@ -107,15 +116,6 @@ class OcorrenciaController extends Controller
         ]);
 
         $ocorrencia->update($validated);
-        return redirect()->route('ocorrencias.index');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Ocorrencia $ocorrencia)
-    {
-        $ocorrencia->delete();
-        return redirect()->route('ocorrencias.index');
+        return redirect()->route('ocorrencias');
     }
 }

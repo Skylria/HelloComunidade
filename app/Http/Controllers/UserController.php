@@ -37,12 +37,12 @@ class UserController extends Controller
             'cidade' => $validated['cidade'],
         ]);
 
-        
+
         $credentials = $request->only('email', 'password');
         Auth::attempt($credentials);
         $request->session()->regenerate();
 
-        return redirect()->route('ocorrencias.index');
+        return redirect()->route('ocorrencias', 'pendentes');
     }
 
     // Exibe a página de login
@@ -60,7 +60,7 @@ class UserController extends Controller
         ]);
 
         if (Auth::attempt($credentials)) {
-            return redirect()->route('ocorrencias.index');
+            return redirect()->route('ocorrencias', 'pendentes');
         }
 
         return back();

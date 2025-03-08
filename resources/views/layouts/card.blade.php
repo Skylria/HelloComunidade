@@ -8,10 +8,10 @@
                     </div>
                     <div>
                         @if ($ocorrencia->midia == null)
-                            <img class="rounded-t-lg object-cover h-60 w-full"
+                            <img class="object-cover h-60 w-full"
                                 src='https://t3.ftcdn.net/jpg/02/48/42/64/360_F_248426448_NVKLywWqArG2ADUxDq6QprtIzsF82dMF.jpg'></i>
                         @else
-                            <img class="rounded-t-lg" src="$ocorrencia->midia" />
+                            <img class="object-cover h-60 w-full" src="data:image/png;base64, {{ $ocorrencia->midia }}" />
                         @endif
                     </div>
                     <div class="p-5">

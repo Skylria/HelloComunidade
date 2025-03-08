@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
             'nome' => 'Prefeitura',
             'email' => 'test@example.com',
         ]);
-        
+
         User::factory()->create([
             'nome' => 'Morador',
             'email' => 'morador@example.com',
@@ -34,7 +34,7 @@ class DatabaseSeeder extends Seeder
         ]);
         User::factory()->create([
             'nome' => 'Morador3',
-            'email' => 'morador2@example.com',
+            'email' => 'morador3@example.com',
             'tipo' => 'morador',
             'rua' => 'Av. Rui Barbosa',
         ]);

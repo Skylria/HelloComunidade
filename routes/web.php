@@ -6,7 +6,7 @@ use App\Http\Controllers\UserController;
 
 Route::middleware('auth')->group(function () {
     Route::get('/ocorrencias/list/{status}', [OcorrenciaController::class, 'index'])->name('ocorrencias');
-    Route::resource('ocorrencias', OcorrenciaController::class)->except('index');
+    Route::resource('ocorrencias', OcorrenciaController::class)->except('index', 'destroy');
     // Route::get('/index/{pendentes}', [OcorrenciaController::class,'index'])->name('index');
 });
 
