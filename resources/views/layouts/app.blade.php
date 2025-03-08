@@ -13,39 +13,42 @@
     @if (Auth::check())
         <nav class="bg-blue-700 border-gray-200 ">
             <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-                <a href="#" class="text-white font-bold text-2xl flex items-center space-x-3 rtl:space-x-reverse">
+                <a href="{{ route('ocorrencias', 'pendentes') }}"
+                    class="text-white font-bold text-2xl flex items-center space-x-3 rtl:space-x-reverse">
                     Hello Comunidade
                 </a>
                 <div class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
                     <a href="{{ route('logout') }}"
                         class="block px-4 py-2 text-white font-bold hover:opacity-50">Sair</a>
                 </div>
-                <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-user">
-                    <ul
-                        class="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0">
-                        <li>
-                            <a href="/home" class="block py-2 px-3 text-white md:hover:opacity-50 rounded-sm"
-                                aria-current="page"><i class="fa-solid fa-house fa-xl"></i><span
-                                    class="ml-2 text-xl">Home</span></a>
-                        </li>
-                        <li>
-                            <a href="/notificacoes" class="block py-2 px-3 text-white md:hover:opacity-50 rounded-sm"><i
-                                    class="fa-solid fa-bell fa-xl"></i><span
-                                    class="ml-2 text-xl">Notificações</span></a>
-                        </li>
-                        <li>
-                            <a href="/ocorrencias" class="block py-2 px-3 text-white md:hover:opacity-50 rounded-sm"><i
-                                    class="fa-solid fa-file-lines fa-xl"></i><span class="ml-2 text-xl">Minhas
-                                    ocorrências</span></a>
-                        </li>
-                    </ul>
-                </div>
+                @if (Auth::user()->tipo === 'morador')
+                    <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
+                        id="navbar-user">
+                        <ul
+                            class="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0">
+
+                            <li>
+                                <a href="/notificacoes"
+                                    class="block py-2 px-3 text-white md:hover:opacity-50 rounded-sm"><i
+                                        class="fa-solid fa-bell fa-xl"></i><span
+                                        class="ml-2 text-xl">Notificações</span></a>
+                            </li>
+                            <li>
+                                <a href="/ocorrencias"
+                                    class="block py-2 px-3 text-white md:hover:opacity-50 rounded-sm"><i
+                                        class="fa-solid fa-file-lines fa-xl"></i><span class="ml-2 text-xl">Minhas
+                                        ocorrências</span></a>
+                            </li>
+                        </ul>
+                    </div>
+                @endif
             </div>
         </nav>
-
-        <div class="pb-20">
-            @yield('content')
-        </div>
+    @endif
+    <div class="pb-20">
+        @yield('content')
+    </div>
+    @if (Auth::check())
         <ul
             class="flex font-medium p-3 rounded-full justify-around flex-row bg-gray-300 md:hidden mx-5 fixed bottom-4 left-0 right-0">
             <li>

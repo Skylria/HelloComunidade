@@ -32,5 +32,11 @@ class DatabaseSeeder extends Seeder
             'rua' => 'quarenta e um',
             'bairro' => 'Caetés',
         ]);
+        User::factory()->create([
+            'nome' => 'Morador3',
+            'email' => 'morador2@example.com',
+            'tipo' => 'morador',
+            'rua' => 'Av. Rui Barbosa',
+        ]);
     }
 }

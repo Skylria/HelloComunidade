@@ -42,7 +42,7 @@ class UserController extends Controller
         Auth::attempt($credentials);
         $request->session()->regenerate();
 
-        return redirect()->route('home');
+        return redirect()->route('ocorrencias.index');
     }
 
     // Exibe a página de login
@@ -60,10 +60,10 @@ class UserController extends Controller
         ]);
 
         if (Auth::attempt($credentials)) {
-            return redirect()->route('home');
+            return redirect()->route('ocorrencias.index');
         }
 
-        return back()->withErrors(['email' => 'Credenciais inválidas']);
+        return back();
     }
 
     // Logout do usuário
