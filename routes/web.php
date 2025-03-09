@@ -6,18 +6,14 @@ use App\Http\Controllers\UserController;
 
 Route::middleware('auth')->group(function () {
     Route::get('/ocorrencias/list/{status}', [OcorrenciaController::class, 'index'])->name('ocorrencias');
-    Route::resource('ocorrencias', OcorrenciaController::class)->except('index', 'destroy');
-    // Route::get('/index/{pendentes}', [OcorrenciaController::class,'index'])->name('index');
+    Route::get('/ocorrencias/map', [OcorrenciaController::class, 'showMap'])->name('ocorrencias.map');
+    Route::get('/ocorrencias/myoccurrences', [OcorrenciaController::class, 'list'])->name('ocorrencias.list');
+    Route::post('/ocorrencias/{ocorrencia}/update', [OcorrenciaController::class, 'update'])->name('ocorrencias.update');
+    Route::resource('ocorrencias', OcorrenciaController::class)->except('index', 'update', 'destroy');
+
 });
 
-// Route::get('/reclamacoes', [ReclamacaoController::class, 'index'])->name('reclamacoes.index');
-// Route::post('/reclamacoes', [ReclamacaoController::class, 'store'])->name('reclamacoes.store');
-// Route::put('/reclamacoes/{id}/status', [ReclamacaoController::class, 'updateStatus'])->name('reclamacoes.updateStatus');
-
-// // Rota para avaliações
-// Route::post('/reclamacoes/{id}/avaliar', [AvaliacaoController::class, 'store'])->name('reclamacoes.avaliar');
-// Registro e login de usuários
-Route::get('/register', [UserController::class, 'showRegisterForm'])->name('register');
+Route::get('/register', [UserController::class, 'showRegisterForm'])->name(name: 'register');
 Route::post('/register', [UserController::class, 'register']);
 
 Route::get('/login', [UserController::class, 'showLoginForm'])->name('login');

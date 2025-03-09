@@ -17,18 +17,18 @@ class OcorrenciaController extends Controller
     {
         $statusFilter = $status == 'pendentes' ? 'pendente' : 'resolvido';
 
-        $user = Auth::user();
-        if ($user->tipo === 'morador') {
+        if (Auth::user()->tipo === 'morador') {
             $ocorrencias = DB::table('ocorrencias')
                 ->join('users', 'users.id', '=', 'ocorrencias.user_id')
-                ->where('ocorrencias.bairro', '=', $user->bairro)
+                ->where('ocorrencias.bairro', '=', Auth::user()->bairro)
                 ->where('ocorrencias.status', '=', $statusFilter)
                 ->select('ocorrencias.*', 'users.nome')
                 ->get();
         } else {
             $ocorrencias = DB::table('ocorrencias')
                 ->join('users', 'users.id', '=', 'ocorrencias.user_id')
-                ->where('ocorrencias.cidade', '=', $user->cidade)
+                ->where('ocorrencias.cidade', '=', Auth::user()->cidade)
+                ->where('ocorrencias.status', '=', $statusFilter)
                 ->select('ocorrencias.*', 'users.nome')
                 ->get();
         }
@@ -91,7 +91,12 @@ class OcorrenciaController extends Controller
      */
     public function show(Ocorrencia $ocorrencia)
     {
-        return view('ocorrencias.show');
+        $ocorrencia = DB::table('ocorrencias')
+            ->join('users', 'users.id', '=', 'ocorrencias.user_id')
+            ->where('ocorrencias.id', '=', $ocorrencia->id)
+            ->select('ocorrencias.*', 'users.nome')
+            ->first();
+        return view('ocorrencias.show', compact('ocorrencia'));
     }
 
     /**
@@ -99,7 +104,7 @@ class OcorrenciaController extends Controller
      */
     public function edit(Ocorrencia $ocorrencia)
     {
-        return view('ocorrencias.edit', compact('ocorrencias'));
+        return view('ocorrencias.edit', compact('ocorrencia'));
     }
 
     /**
@@ -107,15 +112,40 @@ class OcorrenciaController extends Controller
      */
     public function update(Request $request, Ocorrencia $ocorrencia)
     {
-        $validated = $request->validate([
-            'tipo' => 'required|string',
-            'rua' => 'required|string|max:255',
-            'titulo' => 'required|string|max:255',
-            'descricao' => 'required|string',
-            'midia' => 'nullable|string',
-        ]);
+        if (Auth::user()->tipo == 'prefeitura') {
+            $ocorrencia->status = 'resolvido';
+            $ocorrencia->save();
+            return redirect()->route('ocorrencias', 'resolvidas');
+        } else {
+            $validated = $request->validate([
+                'tipo' => 'required|string',
+                'rua' => 'required|string|max:255',
+                'titulo' => 'required|string|max:255',
+                'descricao' => 'required|string',
+            ]);
+            $ocorrencia->update($validated);
+            return redirect()->route('ocorrencias', 'pendentes');
+        }
 
-        $ocorrencia->update($validated);
-        return redirect()->route('ocorrencias');
+    }
+
+    public function list()
+    {
+        $ocorrencias = DB::table('ocorrencias')
+            ->select('ocorrencias.*')
+            ->where('ocorrencias.user_id', '=', Auth::user()->id)
+            ->get();
+        return view('ocorrencias.userlist', compact('ocorrencias'));
+    }
+
+    public function showMap()
+    {
+        $ocorrencias = DB::table('ocorrencias')
+            ->join('users', 'users.id', '=', 'ocorrencias.user_id')
+            ->where('ocorrencias.bairro', '=', Auth::user()->bairro)
+            ->where('ocorrencias.status', '=', 'pendente')
+            ->select('ocorrencias.*', 'users.nome')
+            ->get();
+        return view('ocorrencias.map', compact('ocorrencias'));
     }
 }

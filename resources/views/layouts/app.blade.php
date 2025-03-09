@@ -27,14 +27,13 @@
                         <ul
                             class="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0">
 
-                            <li>
-                                <a href="/notificacoes"
-                                    class="block py-2 px-3 text-white md:hover:opacity-50 rounded-sm"><i
+                            {{-- <li>
+                                <a href="#" class="block py-2 px-3 text-white md:hover:opacity-50 rounded-sm"><i
                                         class="fa-solid fa-bell fa-xl"></i><span
                                         class="ml-2 text-xl">Notificações</span></a>
-                            </li>
+                            </li> --}}
                             <li>
-                                <a href="/ocorrencias"
+                                <a href="{{ route('ocorrencias.list') }}"
                                     class="block py-2 px-3 text-white md:hover:opacity-50 rounded-sm"><i
                                         class="fa-solid fa-file-lines fa-xl"></i><span class="ml-2 text-xl">Minhas
                                         ocorrências</span></a>
