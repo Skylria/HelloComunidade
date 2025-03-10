@@ -2,7 +2,7 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         @foreach ($ocorrencias as $ocorrencia)
             <div class="p-2 max-w-sm bg-white border border-blue-500 rounded-lg shadow-sm hover:bg-gray-50">
-                <a href="{{ route('ocorrencias.show', $ocorrencia->id) }}">
+                <a href="{{ route('ocorrencias.show', $ocorrencia->id) }}" data-cy="showcard">
                     <div class="flex p-4 gap-2 items-center">
                         <i class="fa-solid text-blue-600 fa-circle-user fa-xl"></i>
                         <p class=" text-xl text-blue-600 font-bold">{{ $ocorrencia->nome }}</p>
@@ -17,7 +17,7 @@
                         @endif
                     </div>
                     <div class="p-5">
-                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-blue-700">
+                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-blue-700" data-cy="ocTitle">
                             {{ $ocorrencia->titulo }}</h5>
                         <span
                             class="inline-flex items-center me-2 mb-2 px-5 py-2.5 text-sm font-medium rounded-full text-center text-white bg-red-400 focus:ring-4 focus:outline-none">

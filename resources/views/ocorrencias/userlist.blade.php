@@ -16,7 +16,7 @@
                             @endif
                         </div>
                         <div class="p-5">
-                            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">
+                            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900" data-cy="userOcCard">
                                 {{ $ocorrencia->titulo }}</h5>
                             <span
                                 class="inline-flex items-center me-2 mb-2 px-5 py-2.5 text-sm font-medium rounded-full text-center text-white bg-red-400 focus:ring-4 focus:outline-none">

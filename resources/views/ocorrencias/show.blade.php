@@ -4,7 +4,7 @@
         {{-- <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"> --}}
         <div class="p-2 max-w-3xl mx-auto bg-white border border-gray-500 rounded-lg shadow-sm">
             <div class="flex p-4 justify-between items-center gap-3">
-                <h5 class="text-2xl font-bold tracking-tight text-gray-900">
+                <h5 class="text-2xl font-bold tracking-tight text-gray-900" data-cy="showOcTitle">
                     {{ $ocorrencia->titulo }}</h5>
                 @if (Auth::user()->tipo === 'prefeitura' && $ocorrencia->status != 'resolvido')
                     <button id="btnEditar"

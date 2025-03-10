@@ -4,7 +4,7 @@
         @if (Auth::user()->tipo === 'morador')
             <div class="block">
                 <a class="md:inline-block hidden px-6 py-3.5 text-base font-medium text-white bg-blue-700 hover:bg-blue-800 rounded-full text-center"
-                    href="{{ route('ocorrencias.create') }}">Criar Ocorrência</a>
+                    data-cy="createOc" href="{{ route('ocorrencias.create') }}">Criar Ocorrência</a>
         @endif
         <a class="md:inline-block px-6 py-3.5 text-base font-medium hidden text-white bg-blue-700 hover:bg-blue-800 rounded-full text-center"
             href="{{ route('ocorrencias.map') }}"> Ver no mapa</a>
@@ -16,7 +16,8 @@
                 <a href="{{ route('ocorrencias', 'pendentes') }}" @class([
                     'block py-2 px-5 text-gray-600 rounded-full' => true,
                     'bg-blue-50' => $status == 'pendentes',
-                ]) aria-current="page">Abertas</a>
+                ])
+                    aria-current="page">Abertas</a>
             </li>
             <li>
                 <a href="{{ route('ocorrencias', 'resolvidas') }}" @class([

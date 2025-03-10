@@ -20,7 +20,8 @@
         <nav class="bg-blue-700 border-gray-200 ">
             <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
                 <a href="{{ route('ocorrencias', 'pendentes') }}"
-                    class="text-white font-bold text-2xl flex items-center space-x-3 rtl:space-x-reverse">
+                    class="text-white font-bold text-2xl flex items-center space-x-3 rtl:space-x-reverse"
+                    data-cy="welcome">
                     Hello {{ Auth::user()->nome }}!
                 </a>
                 <div
@@ -35,7 +36,7 @@
                             class="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0">
                             <li>
                                 <a href="{{ route('ocorrencias.list') }}"
-                                    class="block py-2 px-3 text-white md:hover:opacity-50 rounded-sm"><i
+                                    class="block py-2 px-3 text-white md:hover:opacity-50 rounded-sm" data-cy="myOcs"><i
                                         class="fa-solid fa-file-lines fa-xl"></i><span class="ml-2 text-xl">Minhas
                                         ocorrências</span></a>
                             </li>
