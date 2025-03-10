@@ -27,6 +27,5 @@
             </li>
         </ul>
     </div>
-    </div>
     @include('layouts.card')
 @endsection

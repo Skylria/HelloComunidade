@@ -46,7 +46,8 @@
             </div>
         </nav>
     @endif
-    @yield('content')
+    <div class="pb-20">
+        @yield('content')
     </div>
     @if (Auth::check())
         <ul
