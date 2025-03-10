@@ -34,7 +34,7 @@
                     <label for="título" class="block mb-2 text-sm font-bold text-gray-900">Título</label>
                     <input type="text" id="title" name="titulo"
                         class="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm"
-                        placeholder="Ex: Buraco na rua" value="{{ $ocorrencia->rua }}" required>
+                        placeholder="Ex: Buraco na rua" value="{{ $ocorrencia->titulo }}" required>
                 </div>
                 <div class="sm:col-span-2">
                     <label for="descrição"

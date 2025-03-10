@@ -18,6 +18,8 @@ class Ocorrencia extends Model
         'rua',
         'bairro',
         'cidade',
+        'lat',
+        'lng',
         'user_id'
     ];
 

@@ -71,6 +71,9 @@ class OcorrenciaController extends Controller
             'midia' => 'nullable|file',
         ]);
 
+        $endereco = $user->cidade . ', ' . $user->bairro . ', ' . $validated['rua'];
+        $geo = $this->getLatLongFromAddress($endereco);
+
         Ocorrencia::create([
             'tipo' => $validated['tipo'],
             'titulo' => $validated['titulo'],
@@ -80,6 +83,8 @@ class OcorrenciaController extends Controller
             'rua' => $validated['rua'],
             'bairro' => $user->bairro,
             'cidade' => $user->cidade,
+            'lat' => $geo[0],
+            'lng' => $geo[1],
             'user_id' => $user->id,
         ]);
 
@@ -123,6 +128,10 @@ class OcorrenciaController extends Controller
                 'titulo' => 'required|string|max:255',
                 'descricao' => 'required|string',
             ]);
+            $endereco = $ocorrencia->cidade . ', ' . $ocorrencia->bairro . ', ' . $validated['rua'];
+            $geo = $this->getLatLongFromAddress($endereco);
+            $ocorrencia->lat = $geo[0];
+            $ocorrencia->lng = $geo[1];
             $ocorrencia->update($validated);
             return redirect()->route('ocorrencias', 'pendentes');
         }
@@ -138,40 +147,50 @@ class OcorrenciaController extends Controller
         return view('ocorrencias.userlist', compact('ocorrencias'));
     }
 
-    private function getLatLongFromAddress($address, $info = null)
+    private function getLatLongFromAddress($address)
     {
         $result = app('geocoder')->geocode($address)->get();
         $coordinates = $result[0]->getCoordinates();
         $lat = $coordinates->getLatitude();
         $long = $coordinates->getLongitude();
 
-        $return = [$lat, $long];
-
-        if ($info != null) {
-            array_push($return, $info);
-        }
-
-        return $return;
+        return [$lat, $long];
     }
+
     function geocode(Request $request)
     {
-        dd($request);
-        $ocorrencias = DB::table('ocorrencias')
-            ->join('users', 'users.id', '=', 'ocorrencias.user_id')
-            ->where('ocorrencias.bairro', '=', Auth::user()->bairro)
-            ->where('ocorrencias.status', '=', 'pendente')
-            ->select('ocorrencias.*', 'users.nome')
-            ->get();
-        foreach ($ocorrencias as $ocorrencia) {
-            $ocorrencia->rua = $this->getLatLongFromAddress($ocorrencia->rua);
+        if (Auth::user()->tipo === 'morador') {
+            $ocorrencias = DB::table('ocorrencias')
+                ->join('users', 'users.id', '=', 'ocorrencias.user_id')
+                ->where('ocorrencias.bairro', '=', Auth::user()->bairro)
+                ->where('ocorrencias.status', '=', 'pendente')
+                ->select('ocorrencias.*', 'users.nome')
+                ->get();
+        } else {
+            $ocorrencias = DB::table('ocorrencias')
+                ->join('users', 'users.id', '=', 'ocorrencias.user_id')
+                ->where('ocorrencias.cidade', '=', Auth::user()->cidade)
+                ->where('ocorrencias.status', '=', 'pendente')
+                ->select('ocorrencias.*', 'users.nome')
+                ->get();
+        }
+        $data = [];
+
+        foreach ($ocorrencias as $oco) {
+            // nome do morador, titulo
+            array_push(
+                $data,
+                [
+                    'lat' => $oco->lat,
+                    'lng' => $oco->lng,
+                    'titulo' => $oco->titulo,
+                    'nome' => $oco->nome,
+                    'tipo' => $oco->tipo,
+                ]
+            );
         }
 
-        $address1 = [
-            $this->getLatLongFromAddress($request->address, 'titulo, pendente, ...'),
-            $this->getLatLongFromAddress($request->address2, 'titulo 2, pendente 2, ... 2')
-        ];
-
-        return view('ocorrencias.map')->with('address', $address1);
+        return view('ocorrencias.map')->with('data', $data);
     }
 
 

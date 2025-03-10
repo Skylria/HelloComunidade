@@ -2,6 +2,7 @@
 
 @section('content')
     <div class="container mx-auto p-4">
+        <h5 class=" p-5 font-bold text-3xl text-center">Minhas Ocorrências</h5>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             @foreach ($ocorrencias as $ocorrencia)
                 <div class="p-2 max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-50">

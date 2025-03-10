@@ -12,7 +12,7 @@
                         Alterar Status
                     </button>
                 @endif
-                @if (Auth::user()->tipo === 'morador')
+                @if (Auth::user()->tipo === 'morador' && Auth::user()->id === $ocorrencia->user_id && $ocorrencia->status != 'resolvido')
                     <a href="{{ route('ocorrencias.edit', $ocorrencia->id) }}"
                         class="px-5 py-2 text-sm font-medium rounded-full text-center text-white bg-blue-800">
                         Editar
@@ -36,9 +36,9 @@
                     class="inline-flex items-center me-2 mb-2 px-5 py-2.5 text-sm font-medium rounded-full text-center text-white bg-yellow-400">
                     {{ $ocorrencia->status }}
                 </span>
-                <div class="flex p-4 justify-between items-center">
+                <div class="flex p-4 gap-2 items-center">
                     <i class="fa-solid fa-circle-user fa-xl"></i>
-                    <p class="mb-2 p-5 text-xl font-bold">{{ $ocorrencia->nome }}</p>
+                    <p class=" text-xl font-bold">{{ $ocorrencia->nome }}</p>
                 </div>
                 {{-- <p class="mb-2 pt-5"> Criado por: <span class="font-bold">{{ $ocorrencia->nome }}</span></p> --}}
                 <p class="mb-2 py-5 tracking-tight text-gray-900">{{ $ocorrencia->descricao }}</p>

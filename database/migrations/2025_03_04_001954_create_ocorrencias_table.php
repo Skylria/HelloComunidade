@@ -21,6 +21,8 @@ return new class extends Migration {
             $table->string('rua'); // Rua, bairro e cidade
             $table->string('bairro');
             $table->string('cidade');
+            $table->string('lat');
+            $table->string('lng');
             $table->timestamps();
         });
     }
