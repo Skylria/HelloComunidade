@@ -1,9 +1,8 @@
 describe('Login', ()=> {
     beforeEach(()=>{
-            cy.visit('localhost:8000/')
+            cy.visit('https://hellocomunidade-main-7vkmik.laravel.cloud/')
         })
     it('User should create account', () => {
-        cy.visit('localhost:8000/')
         cy.get('[data-cy="register"]').click()
         cy.get('[data-cy="name"]').type('Maycon')
         cy.get('[data-cy="email"]').type('maycon@test.com')

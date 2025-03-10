@@ -1,6 +1,6 @@
 describe('occurrency flow', ()=> {
     beforeEach(()=>{
-        cy.visit('localhost:8000/')
+        cy.visit('https://hellocomunidade-main-7vkmik.laravel.cloud/')
     })
     it('User should create occurrency', ()=>{
         cy.login()
