@@ -193,11 +193,4 @@ class OcorrenciaController extends Controller
         return view('ocorrencias.map')->with('data', $data);
     }
 
-
-    // public function showMap()
-    // {
-
-    //     return view('ocorrencias.map', compact('ocorrencias'));
-    // }
-
 }
