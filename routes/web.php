@@ -10,6 +10,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/ocorrencias/myoccurrences', [OcorrenciaController::class, 'list'])->name('ocorrencias.list');
     Route::post('/ocorrencias/{ocorrencia}/update', [OcorrenciaController::class, 'update'])->name('ocorrencias.update');
     Route::resource('ocorrencias', OcorrenciaController::class)->except('index', 'update', 'destroy');
+    Route::get('/', function () {
+        return to_route('ocorrencias', 'pendentes');
+    });
 
 });
 
