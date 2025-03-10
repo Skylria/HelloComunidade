@@ -138,14 +138,47 @@ class OcorrenciaController extends Controller
         return view('ocorrencias.userlist', compact('ocorrencias'));
     }
 
-    public function showMap()
+    private function getLatLongFromAddress($address, $info = null)
     {
+        $result = app('geocoder')->geocode($address)->get();
+        $coordinates = $result[0]->getCoordinates();
+        $lat = $coordinates->getLatitude();
+        $long = $coordinates->getLongitude();
+
+        $return = [$lat, $long];
+
+        if ($info != null) {
+            array_push($return, $info);
+        }
+
+        return $return;
+    }
+    function geocode(Request $request)
+    {
+        dd($request);
         $ocorrencias = DB::table('ocorrencias')
             ->join('users', 'users.id', '=', 'ocorrencias.user_id')
             ->where('ocorrencias.bairro', '=', Auth::user()->bairro)
             ->where('ocorrencias.status', '=', 'pendente')
             ->select('ocorrencias.*', 'users.nome')
             ->get();
-        return view('ocorrencias.map', compact('ocorrencias'));
+        foreach ($ocorrencias as $ocorrencia) {
+            $ocorrencia->rua = $this->getLatLongFromAddress($ocorrencia->rua);
+        }
+
+        $address1 = [
+            $this->getLatLongFromAddress($request->address, 'titulo, pendente, ...'),
+            $this->getLatLongFromAddress($request->address2, 'titulo 2, pendente 2, ... 2')
+        ];
+
+        return view('ocorrencias.map')->with('address', $address1);
     }
+
+
+    // public function showMap()
+    // {
+
+    //     return view('ocorrencias.map', compact('ocorrencias'));
+    // }
+
 }

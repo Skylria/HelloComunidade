@@ -3,9 +3,9 @@
         @foreach ($ocorrencias as $ocorrencia)
             <div class="p-2 max-w-sm bg-white border border-gray-500 rounded-lg shadow-sm hover:bg-gray-50">
                 <a href="{{ route('ocorrencias.show', $ocorrencia->id) }}">
-                    <div class="flex p-4 justify-between items-center">
+                    <div class="flex p-4 gap-2 items-center">
                         <i class="fa-solid fa-circle-user fa-xl"></i>
-                        <p class="p-5 text-xl font-bold">{{ $ocorrencia->nome }}</p>
+                        <p class=" text-xl font-bold">{{ $ocorrencia->nome }}</p>
                     </div>
                     <div>
                         @if ($ocorrencia->midia == null)

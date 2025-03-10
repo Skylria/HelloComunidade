@@ -6,7 +6,7 @@ use App\Http\Controllers\UserController;
 
 Route::middleware('auth')->group(function () {
     Route::get('/ocorrencias/list/{status}', [OcorrenciaController::class, 'index'])->name('ocorrencias');
-    Route::get('/ocorrencias/map', [OcorrenciaController::class, 'showMap'])->name('ocorrencias.map');
+    Route::get('/ocorrencias/map', [OcorrenciaController::class, 'geocode'])->name('ocorrencias.map');
     Route::get('/ocorrencias/myoccurrences', [OcorrenciaController::class, 'list'])->name('ocorrencias.list');
     Route::post('/ocorrencias/{ocorrencia}/update', [OcorrenciaController::class, 'update'])->name('ocorrencias.update');
     Route::resource('ocorrencias', OcorrenciaController::class)->except('index', 'update', 'destroy');
