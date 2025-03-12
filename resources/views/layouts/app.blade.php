@@ -17,7 +17,7 @@
 
 <body class="h-full">
     @if (Auth::check())
-        <nav class="bg-blue-700 flex items-center p-4">
+        <nav class="lg:hidden md:hidden bg-blue-700 flex items-center p-4">
             <div class="text-white text-xl font-medium mx-auto">
                 <span id="app-name">
                     HelloComunidade
