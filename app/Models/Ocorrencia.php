@@ -20,7 +20,8 @@ class Ocorrencia extends Model
         'cidade',
         'lat',
         'lng',
-        'user_id'
+        'user_id',
+        'like'
     ];
 
     public function user()

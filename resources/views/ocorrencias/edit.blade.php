@@ -37,8 +37,7 @@
                         placeholder="Ex: Buraco na rua" value="{{ $ocorrencia->titulo }}" required>
                 </div>
                 <div class="sm:col-span-2">
-                    <label for="descrição"
-                        class="block mb-2 text-sm font-bold text-gray-900 dark:text-gray-400">Descrição</label>
+                    <label for="descrição" class="block mb-2 text-sm font-bold text-gray-900 ">Descrição</label>
                     <textarea id="message" name="descricao" rows="6"
                         class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300"
                         placeholder="Descreva seu problema...">{{ $ocorrencia->descricao }}</textarea>

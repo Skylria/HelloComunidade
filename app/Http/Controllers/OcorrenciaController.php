@@ -193,4 +193,11 @@ class OcorrenciaController extends Controller
         return view('ocorrencias.map')->with('data', $data);
     }
 
+    public function incrementLike(Request $request, Ocorrencia $ocorrencia)
+    {
+        dd($request);
+        $ocorrencia->like = $ocorrencia->like + 1;
+        $ocorrencia->save();
+        return redirect()->route('ocorrencias', 'resolvidas');
+    }
 }

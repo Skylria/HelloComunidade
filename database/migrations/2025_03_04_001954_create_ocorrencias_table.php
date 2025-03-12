@@ -23,6 +23,7 @@ return new class extends Migration {
             $table->string('cidade');
             $table->string('lat');
             $table->string('lng');
+            $table->bigInteger('like')->default(0);
             $table->timestamps();
         });
     }
