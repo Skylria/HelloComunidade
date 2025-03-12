@@ -123,6 +123,15 @@ class OcorrenciaController extends Controller
             $ocorrencia->save();
             return redirect()->route('ocorrencias', 'resolvidas');
         } else {
+
+            $midia = $request->file('midia');
+            $midiaBase64 = null;
+
+            if ($midia != null) {
+                $path = $midia->getRealPath();
+                $image = file_get_contents($path);
+                $midiaBase64 = base64_encode($image);
+            }
             $validated = $request->validate([
                 'tipo' => 'required|string',
                 'rua' => 'required|string|max:255',
@@ -133,6 +142,9 @@ class OcorrenciaController extends Controller
             $geo = $this->getLatLongFromAddress($endereco);
             $ocorrencia->lat = $geo[0];
             $ocorrencia->lng = $geo[1];
+            if ($midiaBase64 != null) {
+                $ocorrencia->midia = $midiaBase64;
+            }
             $ocorrencia->update($validated);
             return redirect()->route('ocorrencias', 'pendentes')->with('edit-success', 'Ocorrência editada com sucesso');
         }

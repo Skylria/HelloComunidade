@@ -46,7 +46,8 @@
                 ocorrência</h2>
             <p class="mb-8 lg:mb-16 font-light text-center text-gray-500 sm:text-xl">Informe abaixo qual
                 é o problema existente na sua localidade</p>
-            <form action="{{ route('ocorrencias.update', $ocorrencia->id) }}" method="POST" class="space-y-8">
+            <form action="{{ route('ocorrencias.update', $ocorrencia->id) }}" method="POST" class="space-y-8"
+                enctype="multipart/form-data">
                 @csrf
                 <div>
                     <label for="ocorrencias" class="block mb-2 text-sm font-bold text-gray-900">Selecione
@@ -94,8 +95,11 @@
                                     escolher arquivo</span> ou arraste até aqui</p>
                             <p class="text-xs text-gray-500">SVG, PNG, JPG ou GIF
                             </p>
+                            <p id="imagemSelecionada" class="hidden text-xs text-gray-500 mt-3">
+                                <b>Arquivo selecionado: <span id="nomeArquivo"></span></b>
+                            </p>
                         </div>
-                        <input id="dropzone-file" type="file" class="hidden" />
+                        <input id="dropzone-file" type="file" class="hidden" name="midia" />
                     </label>
                 </div>
                 @if ($errors->any())
@@ -113,4 +117,19 @@
             </form>
         </div>
     </section>
+
+    <script>
+        const fileInput = document.getElementById('dropzone-file');
+        const imagemSelecionada = document.getElementById('imagemSelecionada');
+        const nomeArquivo = document.getElementById('nomeArquivo');
+
+        fileInput.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+
+            if (file) {
+                imagemSelecionada.classList.remove('hidden');
+                nomeArquivo.innerHTML = file.name;
+            }
+        });
+    </script>
 @endsection
