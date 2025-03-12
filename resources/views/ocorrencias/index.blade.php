@@ -2,13 +2,14 @@
 @section('content')
     @if (session('create-success'))
         <div class="bg-green-500 text-white px-10 py-2.5 my-2.5">
-            {{ session('success') }}
+            {{ session('create-success') }}
         </div>
     @elseif (session('edit-success'))
         <div class="bg-green-500 text-white px-10 py-2.5 my-2.5">
-            {{ session('success') }}
+            {{ session('edit-success') }}
         </div>
     @endif
+
     <div class="container mx-auto p-4">
         <div class="text-left text-sm mt-4">
             <ul class="inline-flex font-medium p-1 rounded-full justify-around flex-row bg-gray-300">

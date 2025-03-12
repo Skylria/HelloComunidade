@@ -12,8 +12,8 @@ return new class extends Migration {
     {
         Schema::create('like_users', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users');
-            $table->foreignId('ocorrencia_id')->constrained('ocorrencias');
+            $table->integer('user_id');
+            $table->integer('ocorrencia_id');
             $table->timestamps();
         });
     }
