@@ -42,7 +42,7 @@ class UserController extends Controller
         Auth::attempt($credentials);
         $request->session()->regenerate();
 
-        return redirect()->route('ocorrencias', 'pendentes');
+        return redirect()->route('home');
     }
 
     // Exibe a página de login
@@ -60,7 +60,7 @@ class UserController extends Controller
         ]);
 
         if (Auth::attempt($credentials)) {
-            return redirect()->route('ocorrencias', 'pendentes');
+            return redirect()->route('home');
         }
 
         return back();

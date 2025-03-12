@@ -9,10 +9,6 @@
             {{ session('success') }}
         </div>
     @endif
-    {{-- <div class="container mx-auto p-4">
-        
-    </div> --}}
-
     <div class="container mx-auto p-4">
         <div class="text-left text-sm mt-4">
             <ul class="inline-flex font-medium p-1 rounded-full justify-around flex-row bg-gray-300">

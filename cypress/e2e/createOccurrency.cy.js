@@ -1,6 +1,6 @@
 describe('occurrency flow', ()=> {
     beforeEach(()=>{
-        cy.visit('https://hellocomunidade-main-7vkmik.laravel.cloud/')
+        cy.visit('http://hellocomunidade.test')
     })
     it('User should create occurrency', ()=>{
         cy.login()
@@ -22,7 +22,7 @@ describe('occurrency flow', ()=> {
     it('User should view all his occurrencies', ()=>{
         cy.login()
         cy.get('[data-cy="myOcs"]').click()
-        cy.get('[data-cy="userOcCard"]').first().click()
+        cy.get('[data-cy="ocTitle"]').first().click()
         cy.get('[data-cy="showOcTitle"]').contains('Vazamento insano')
     })
 })
