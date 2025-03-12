@@ -4,7 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {{-- <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet"> --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <title>HelloComunidade</title>
@@ -18,90 +17,95 @@
 
 <body class="h-full">
     @if (Auth::check())
-        <nav class="bg-blue-700 border-gray-200 ">
-            <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-                <a href="{{ route('ocorrencias', 'pendentes') }}"
-                    class="text-white font-bold text-2xl flex items-center space-x-3 rtl:space-x-reverse"
-                    data-cy="welcome">
-                    Hello {{ Auth::user()->nome }}!
-                </a>
-                <div
-                    class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse bg-white hover:bg-blue-200  rounded-full text-center">
-                    <a href="{{ route('logout') }}"
-                        class="block px-4 py-2 text-blue-700 font-bold hover:opacity-50">Sair</a>
-                </div>
-                @if (Auth::user()->tipo === 'morador')
-                    <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
-                        id="navbar-user">
-                        <ul
-                            class="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0">
-                            <li>
-                                <a href="{{ route('ocorrencias.list') }}"
-                                    class="block py-2 px-3 text-white md:hover:opacity-50 rounded-sm" data-cy="myOcs"><i
-                                        class="fa-solid fa-file-lines fa-xl"></i><span class="ml-2 text-xl">Minhas
-                                        ocorrências</span></a>
-                            </li>
-                        </ul>
-                    </div>
-                @endif
+        <nav class="bg-blue-700 flex items-center p-4">
+            <div class="text-white text-xl font-medium mx-auto">
+                <span id="app-name">
+                    HelloComunidade
+                </span>
             </div>
+            <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar"
+                type="button" id="btn-menu"
+                class="inline-flex items-center p-2 text-sm text-white-500 rounded-lg sm:hidden hover:opacity-70  cursor-pointer">
+                <span class="sr-only">Open sidebar</span>
+                <svg class="w-6 h-6" aria-hidden="true" fill="#fff" viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path clip-rule="evenodd" fill-rule="evenodd"
+                        d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z">
+                    </path>
+                </svg>
+            </button>
         </nav>
-    @endif
-    <div class="pb-20">
-        @yield('content')
-    </div>
-    @if (Auth::check())
-        <ul
-            class="flex font-medium p-3 rounded-full justify-around flex-row bg-gray-300 md:hidden mx-5 fixed bottom-4 left-0 right-0">
-            <li>
-                <a href="{{ route('ocorrencias', 'pendentes') }}"
-                    class="block py-2 px-5 text-gray-600 rounded-full bg-blue-50" aria-current="page"><i
-                        class="fa-solid fa-house fa-xl"></i></a>
-            </li>
-            <li>
-                <a href="{{ route('ocorrencias.map') }}" class="block py-2 px-5 text-gray-600 rounded-ful"><i
-                        class="fa-solid fa-map-location-dot fa-xl"></i></a>
-            </li>
-            @if (Auth::user()->tipo === 'morador')
-                <li class="dropdown">
-                    <button id="dropdownButton" class="py-2 px-5 text-gray-600 rounded-full">
-                        <i class="fa-solid fa-file-lines fa-xl"></i>
-                    </button>
-                    <div id="dropdownMenu"
-                        class="hidden absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5"
-                        style="bottom: 75px">
-                        <div class="py-1 " role="menu" aria-orientation="vertical">
-                            <div class="flex gap-2">
-                                <a href="{{ route('ocorrencias.list') }}"
-                                    class="block py-2 px-5 text-gray-600 rounded-full"><i
-                                        class="fa-solid fa-circle-exclamation mr-1"></i>Minhas ocorrências</a>
-                            </div>
-                            <div class="flex gap-2">
-                                <a href="{{ route('ocorrencias.create') }}"
-                                    class="block py-2 px-5 text-gray-600 rounded-full"><i
-                                        class="fa-solid fa-circle-plus mr-1"></i>Criar
-                                    ocorrência</a>
-                            </div>
+
+        <aside id="logo-sidebar"
+            class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0 border-r border-r-gray-200"
+            aria-label="Sidebar">
+            <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 ">
+                <a href="{{ route('ocorrencias', 'pendentes') }}" class="flex items-center ps-2.5 mb-5">
+                    <span class="self-center text-xl font-semibold whitespace-nowrap ">HelloComunidade</span>
+                </a>
+                <ul class="space-y-2 font-medium">
+                    <li>
+                        <div class="flex items-center p-2 mb-3 text-gray-900 rounded-lg group">
+                            <i class="fa-regular fa-user-circle fa-xl"></i>
+                            <span class="ms-3 text-lg">{{ Auth::user()->nome }}</span>
                         </div>
-                    </div>
-                </li>
-            @endif
-        </ul>
+                    </li>
+                    <li>
+                        <hr class="h-px my-2 bg-gray-200 border-0">
+                    </li>
+                    <li>
+                        <a href="{{ route('ocorrencias.map') }}"
+                            class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
+                            <i class="fa-solid fa-map"></i>
+                            <span class="ms-3">Ver mapa</span>
+                        </a>
+                    </li>
+                    @if (Auth::user()->tipo == 'morador')
+                        <li>
+                            <hr class="h-px my-2 bg-gray-200 border-0">
+                        </li>
+                        <li>
+                            <a href="{{ route('ocorrencias.create') }}"
+                                class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
+                                <i class="fa-solid fa-plus"></i>
+                                <span class="ms-3">Criar ocorrência</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('ocorrencias.list') }}"
+                                class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
+                                <i class="fa-solid fa-circle-exclamation"></i>
+                                <span class="ms-3">Minha ocorrências</span>
+                            </a>
+                        </li>
+                    @endif
+                    <li>
+                        <hr class="h-px my-2 bg-gray-200 border-0">
+                    </li>
+                    <li>
+                        <a href="{{ route('logout') }}"
+                            class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
+                            <i class="fa-solid fa-sign-out"></i>
+                            <span class="ms-3">Sair</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <div class="pb-10 sm:ml-64">
     @endif
+    @yield('content')
+    @if (Auth::check())
+        </div>
+    @endif
+
+
     <script>
-        const dropdownButton = document.getElementById('dropdownButton');
-        const dropdownMenu = document.getElementById('dropdownMenu');
+        document.getElementById('btn-menu').addEventListener('click', function() {
+            document.getElementById('logo-sidebar').classList.toggle('translate-x-0');
+            document.getElementById('app-name').classList.toggle('hidden');
 
-        // Toggle dropdown visibility
-        dropdownButton.addEventListener('click', () => {
-            dropdownMenu.classList.toggle('hidden');
-        });
-
-        document.addEventListener('click', (event) => {
-            const isClickInside = dropdownButton.contains(event.target) || dropdownMenu.contains(event.target);
-            if (!isClickInside) {
-                dropdownMenu.classList.add('hidden');
-            }
         });
     </script>
 </body>

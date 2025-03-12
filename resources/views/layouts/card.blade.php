@@ -1,5 +1,5 @@
 <div class="container mx-auto p-4">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
         @foreach ($ocorrencias as $ocorrencia)
             <div class="p-3 bg-white border-2 border-blue-500 rounded-lg hover:shadow-lg hover:scale-101 transition-all">
                 <a class="flex flex-col h-full justify-between" href="{{ route('ocorrencias.show', $ocorrencia->id) }}"

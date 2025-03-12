@@ -89,7 +89,7 @@ class OcorrenciaController extends Controller
             'user_id' => $user->id,
         ]);
 
-        return redirect()->route('ocorrencias', 'pendentes');
+        return redirect()->route('ocorrencias', 'pendentes')->with('create-success', 'Ocorrência criada com sucesso');
     }
 
     /**
@@ -134,7 +134,7 @@ class OcorrenciaController extends Controller
             $ocorrencia->lat = $geo[0];
             $ocorrencia->lng = $geo[1];
             $ocorrencia->update($validated);
-            return redirect()->route('ocorrencias', 'pendentes');
+            return redirect()->route('ocorrencias', 'pendentes')->with('edit-success', 'Ocorrência editada com sucesso');
         }
 
     }

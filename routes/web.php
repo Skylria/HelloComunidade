@@ -15,7 +15,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/', function () {
         return to_route('ocorrencias', 'pendentes');
-    });
+    })->name('home');
 
 });
 
