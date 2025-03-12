@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ocorrencia;
+use App\Models\LikeUser;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -193,11 +194,35 @@ class OcorrenciaController extends Controller
         return view('ocorrencias.map')->with('data', $data);
     }
 
-    public function incrementLike(Request $request, Ocorrencia $ocorrencia)
+    public function updateLike(Request $request)
     {
-        dd($request);
-        $ocorrencia->like = $ocorrencia->like + 1;
-        $ocorrencia->save();
-        return redirect()->route('ocorrencias', 'resolvidas');
+        $idUsuario = Auth::user()->id;
+        $idOcorrencia = $request->idOcorrencia;
+
+        $userAlreadyLiked = LikeUser::where('ocorrencia_id', '=', $idOcorrencia)
+            ->where('user_id', '=', $idUsuario)
+            ->first();
+
+        if ($userAlreadyLiked == null) {
+            LikeUser::create(
+                [
+                    'user_id' => $idUsuario,
+                    'ocorrencia_id' => $idOcorrencia
+                ]
+            );
+            $ocorrencia = Ocorrencia::find($idOcorrencia);
+            $ocorrencia->like = $ocorrencia->like + 1;
+            $ocorrencia->save();
+        } else {
+            LikeUser::where('ocorrencia_id', '=', $idOcorrencia)
+                ->where('user_id', '=', $idUsuario)
+                ->delete();
+
+            $ocorrencia = Ocorrencia::find($idOcorrencia);
+            $ocorrencia->like = $ocorrencia->like - 1;
+            $ocorrencia->save();
+        }
+
+        return back();
     }
 }
